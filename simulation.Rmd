@@ -36,9 +36,12 @@ i = 1
 dif = numeric()
 dif[1] = 1
 
-while(any(dif > 0.000001)) {
+#the difference is the loop stop standard, where the difference defined in the note should 
+#be 0, but what we want is just to show the convergency not the exact 0
+while(!any(dif < 0.00000001)) {
 capital = k[i]
 labor = l[i]
+#update difference, labor and capital for each year
 dif[i+1] = sigma*(capital/labor)^alpha - (n+delta)*capital/labor
 k[i+1] = k[i] + sigma*(k[i])^(alpha) *(l[i])^(1-alpha) - delta*k[i]
 l[i+1] = (1+n)^(i+1)
@@ -47,16 +50,17 @@ i = i + 1
 return(dif)
 }
 
-
+#when alpha = 0.33
 dif1 = dif.cal(0.33)[-1]
 df1 = data.frame(s = seq_along(dif1[1:500]), dif1[1:500])
 colnames(df1) = c('x', 'y')
 
-
+#when alpha = 0.67
 dif2 = dif.cal(0.67)[-1]
 df2 = data.frame(s = seq_along(dif2[1:500]), dif2[1:500])
 colnames(df2) = c('x', 'z')
 
+#create data frame with long format
 df.tot = left_join(df1, df2)
 
 df.long = melt(df.tot, id.vars = 'x')
@@ -66,8 +70,9 @@ ggplot(df.long, aes(x = x, y = value, col = variable)) +
   geom_line(linetype = "dotdash") + 
   labs(x = 'Time', y = expression(paste(sigma,
                               'f(k)', "+", "(n+", delta, ')','k', sep = "")), 
-       col = expression(alpha)) +
-  theme_bw()
+       col = expression(alpha), title = "Steady State Simulation") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
