@@ -20,9 +20,14 @@ l0 = 1
 sigma = 0.15
 n = 0.02
 delta = 0.03
-alpha = 0.67
 
+```
+
+```{r}
 #construct table
+
+#create function calculating wanted result under steady state assuption 
+dif.cal = function(alpha){
 k = numeric()
 l = numeric()
 k[1] = k0
@@ -39,15 +44,16 @@ k[i+1] = k[i] + sigma*(k[i])^(alpha) *(l[i])^(1-alpha) - delta*k[i]
 l[i+1] = (1+n)^(i+1)
 i = i + 1
 }
+return(dif)
+}
 
 
-
-dif1 = dif[-1]
+dif1 = dif.cal(0.33)[-1]
 df1 = data.frame(s = seq_along(dif1[1:500]), dif1[1:500])
 colnames(df1) = c('x', 'y')
 
 
-dif2 = dif[-1]
+dif2 = dif.cal(0.67)[-1]
 df2 = data.frame(s = seq_along(dif2[1:500]), dif2[1:500])
 colnames(df2) = c('x', 'z')
 
