@@ -1,5 +1,5 @@
 ---
-title: "simulation"
+title: "Simulation"
 author: "Lianghui Li"
 date: "10/8/2017"
 output: pdf_document
@@ -22,6 +22,9 @@ n = 0.02
 delta = 0.03
 
 ```
+
+
+The expression that we use to define steady state, we define as the 'difference' in belows $\dot{k} = \sigma f(k)+ (n+ \delta)k$
 
 ```{r}
 #construct table
@@ -66,6 +69,7 @@ df.tot = left_join(df1, df2)
 df.long = melt(df.tot, id.vars = 'x')
 df.long$variable = c(rep('0.33', 500), rep('0.67', 500))
 
+#create plot(time series)
 ggplot(df.long, aes(x = x, y = value, col = variable)) +
   geom_line(linetype = "dotdash") + 
   labs(x = 'Time', y = expression(paste(sigma,
@@ -76,3 +80,4 @@ ggplot(df.long, aes(x = x, y = value, col = variable)) +
 
 ```
 
+It's clear that with greater $\alpha$, it will take longer to get to steady state based on the assumption.
