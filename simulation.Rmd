@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message = F)
 library(dplyr)
 library(reshape2)
 library(ggplot2)
@@ -24,12 +24,12 @@ delta = 0.03
 ```
 
 
-The expression that we use to define steady state, we define as the 'difference' in belows $\dot{k} = \sigma f(k)+ (n+ \delta)k$
+The expression that we use to define steady state, we define as the `difference` in belows $$\dot{k} = \sigma f(k)+ (n+ \delta)k$$
 
 ```{r}
 #construct table
 
-#create function calculating wanted result under steady state assuption 
+#create function calculating wanted result under steady state assumption 
 dif.cal = function(alpha){
 k = numeric()
 l = numeric()
@@ -39,8 +39,8 @@ i = 1
 dif = numeric()
 dif[1] = 1
 
-#the difference is the loop stop standard, where the difference defined in the note should 
-#be 0, but what we want is just to show the convergency not the exact 0
+#the difference is the loop stop standard, where the difference defined in the note
+#should be 0, but what we want is just to show the convergency not the exact 0
 while(!any(dif < 0.00000001)) {
 capital = k[i]
 labor = l[i]
